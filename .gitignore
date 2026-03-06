@@ -1,0 +1,39 @@
+# Sensitive files — never commit these
+*.key
+*.pem
+*.p12
+*.pfx
+*.env
+.env.*
+!.env.example
+secrets.*
+*secret*
+*password*
+*credentials*
+
+# Wallet and crypto keys
+wallet.key
+mnemonic
+*.seed
+
+# API keys / tokens (flat files)
+*_api_key*
+*_token*
+*_secret*
+api_keys.*
+
+# Secrets directory
+secrets/
+
+# OpenClaw private state
+.openclaw/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
