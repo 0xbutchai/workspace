@@ -1,86 +1,50 @@
 # SKILL.md - GitHub Push
 
 ## Description
-Push workspace progress to a GitHub repository safely — with secret scanning, .gitignore setup, history scrubbing if needed, and clean commit hygiene.
-
-## When to Use
-- "Push to GitHub"
-- "Commit and push my changes"
-- "Set up GitHub for this workspace"
-- "Push progress to the repo"
+Push workspace progress to GitHub safely — secret scanning, .gitignore, repo creation, and clean commits.
 
 ## Prerequisites
-- Git installed (`git --version`)
-- GitHub account with a target repo created (or create one via `gh repo create`)
-- Auth: either `gh` CLI authenticated (`gh auth status`) or SSH key configured
+- Git installed, GitHub account exists, PAT with `repo` scope generated
 
 ## Workflow
 
-### Step 1 — Audit for Secrets FIRST
-Before any git operation, scan all tracked files for sensitive content:
+### 1. Scan for Secrets First
 ```bash
-grep -rn "cm_live_\|sk-\|api_key\s*=\|password\s*=\|secret\s*=\|BEGIN.*PRIVATE" \
-  . --include="*.md" --include="*.json" --include="*.txt" --include="*.env" -i
+grep -rn "cm_live_\|sk-\|ghp_\|api_key\s*=\|password\s*=\|BEGIN.*PRIVATE" . \
+  --include="*.md" --include="*.json" --include="*.env" -i
 ```
-If any raw key values are found:
-1. Remove or redact them from the file
-2. If already committed → scrub history (see Step 5)
+If hits found: redact, then check git history (Step 5).
 
-### Step 2 — Create / Verify .gitignore
-Ensure `.gitignore` exists and covers:
-- `*.key`, `*.pem`, `*.env`, `.env.*`
-- `wallet.key`, `mnemonic`, `*.seed`
-- `*secret*`, `*password*`, `*credentials*`, `*_api_key*`, `*_token*`
-- `.openclaw/` (local state directory)
-- OS junk: `.DS_Store`, `Thumbs.db`
-- Editor dirs: `.vscode/`, `.idea/`
+### 2. Verify .gitignore Covers
+`*.key`, `*.pem`, `*.env`, `secrets/`, `wallet.key`, `mnemonic`, `*secret*`, `*_token*`, `.openclaw/`
 
-### Step 3 — Initialize / Connect Remote
+Test: `git check-ignore -v secrets/`
+
+### 3. Create Repo via API (skip `gh auth login` — needs extra scopes)
 ```bash
-git init                                      # if not already a repo
-git remote add origin <github-url>            # SSH: git@github.com:user/repo.git
-git remote -v                                 # verify
+curl -sf -X POST -H "Authorization: token $GH_TOKEN" \
+  https://api.github.com/user/repos \
+  -d '{"name":"repo-name","private":false}'
 ```
 
-### Step 4 — Stage, Commit, Push
+### 4. Stage, Commit, Push
 ```bash
-git add .
-git status                                    # review what's staged
+git config user.email "you@example.com" && git config user.name "Name"
+git remote add origin https://USERNAME:$GH_TOKEN@github.com/USERNAME/repo.git
+git add . && git status   # review before committing
 git commit -m "descriptive message"
-git branch -M main                            # rename to main if needed
-git push -u origin main
+git branch -M main && git push -u origin main
 ```
 
-### Step 5 — Scrubbing Secrets from History (if needed)
-If a raw key was committed in a previous commit, remove it with `git-filter-repo`:
+### 5. Scrub History (if secret was committed)
 ```bash
-# Install if needed
 pip install git-filter-repo
-
-# Remove a specific file from all history
-git filter-repo --path path/to/secret-file --invert-paths
-
-# Or replace a specific string across all history
-git filter-repo --replace-text <(echo 'cm_live_XXXX==>REDACTED')
-
-# Force push the rewritten history
+git filter-repo --replace-text <(echo 'EXPOSED_VALUE==>REDACTED')
 git push origin --force --all
 ```
-⚠️ Force-pushing rewrites shared history. Coordinate with any collaborators first.
+Then rotate the exposed key immediately.
 
-### Step 6 — Rotate Exposed Keys
-If a key was ever committed (even briefly), treat it as compromised:
-- Revoke and regenerate it in the provider dashboard
-- Update the new key in your environment/config
-- Never reuse the exposed key
-
-## Guardrails
-- Never commit raw API keys, private keys, mnemonics, or passwords
-- Always run the secret scan (Step 1) before first commit
-- Prefer env vars or secret managers; reference names only (e.g. `CLAWMART_API_KEY`) in docs
-- When in doubt, add to .gitignore before staging
-
-## Notes
-- `.openclaw/workspace-state.json` contains local agent state — keep it gitignored
-- `MEMORY.md` is safe to commit if it contains only references (not raw values) to secrets
-- After pushing, verify on GitHub that no sensitive content is visible in the file tree or commit history
+## Key Lessons
+- Use `curl` + token for repo creation — `gh auth login --with-token` requires `read:org` scope and will fail with a basic `repo`-scoped PAT
+- Token in remote URL works fine: `https://user:token@github.com/...`
+- `git check-ignore -v <path>` confirms what's actually excluded before pushing
