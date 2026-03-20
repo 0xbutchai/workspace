@@ -38,3 +38,55 @@ Thumbs.db
 *.swp
 *.swo
 .vercel
+
+# Generated/build artifacts — project-specific outputs
+# (Timestamped generated images, videos, etc.)
+*-*-*-*.png
+*-*-*-*.jpg
+generated_*.png
+generated_*.jpg
+*.mp4
+*.webm
+
+# Working directories for media projects
+# (animation output, audio workspaces, intermediate files)
+# Use leading slash to anchor to workspace root only
+/lofi-shaman/
+/lofi-degen/
+*/animation/
+*/animation-v*/
+*/audio/
+
+# Deployment artifacts
+public/
+.vercel/
+
+# Node.js / Next.js / Vercel projects (workspace-level)
+# If a directory has its own package.json and .git, it's a standalone project
+# and should be git-ignored (or added as a submodule)
+node_modules/
+.next/
+dist/
+build/
+.turbo/
+out/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+venv/
+.venv
+
+# Dependencies
+.npm
+.yarn
+
+# Project directories with their own .git repos
+# (These are standalone projects checked out into the workspace)
+# If a dir has .git at root, manage it separately — don't track it from parent repo
+0xbutchai-skills/
+landclearing/
+lazer-denver/

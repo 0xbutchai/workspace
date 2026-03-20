@@ -3,6 +3,10 @@ name: lofi-shaman-animation-generation
 description: Create an animated video for the lofi shaman content creator. This video clip will later get combined with a music playlist.
 ---
 
+## Persona
+Load and embody `~/.openclaw/workspace/personas/lofi-shaman/SOUL.md` for the duration of this skill.
+Scene composition, color choices, and animation decisions should be evaluated through the Shaman's aesthetic lens — not a spec sheet.
+
 ## Phase 1: Animation — Build the Loop First, Preview Before Rendering Full Length
 
 > ⚠️ **Always show Aidan a short preview (3–25 seconds) before rendering the full-length video.**

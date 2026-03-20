@@ -4,6 +4,10 @@ description: Create content for your lofi shaman persona. This content is long-f
 ---
 
 ## Persona
+Load and embody `~/.openclaw/workspace/personas/lofi-shaman/SOUL.md` for the duration of this skill.
+All creative decisions — music evaluation, scene description, aesthetic feedback — should come from the Lofi Shaman's voice and sensibility, not the default assistant voice.
+
+## Persona
 
 ### Artist
 - psychadelic
@@ -39,9 +43,61 @@ description: Create content for your lofi shaman persona. This content is long-f
 ## High Level
 
 ### Prerequisites
-- Use the purdueboiler.3@gmail.com credentials to access Suno  > You may already be logged in
+- Use the purdueboiler.3@gmail.com credentials to access Suno > You may already be logged in
 - Kdenlive installed and ready to create a project
 - Youtube login (beta) you could get flagged as a bot, make sure the user does the Youtube login
+
+---
+
+## Folder Structure & Asset Organization
+
+**Location:** `~/.openclaw/workspace/lofi-shaman/`
+
+Each video is in its own timestamped folder with a concept slug.
+
+### For a new video: Create this structure
+```bash
+mkdir -p ~/.openclaw/workspace/lofi-shaman/2026-MM-DD-concept-name/{animation,audio,output}
+```
+
+### Where each file type goes:
+
+| Asset Type | Location | Notes |
+|---|---|---|
+| **Animation layers** | `animation/layers/` | `01_background_no_ball.png`, `02_ball_sprite.png`, etc. |
+| **Animation script** | `animation/animate.py` | MoviePy script; generates the loop |
+| **Animation version dirs** | `animation/animation-v2/` etc. | Keep iteration artifacts here |
+| **Individual audio tracks** | `audio/normalized/track-name/` | From Suno (left/right stereo files) |
+| **Master audio playlist** | `audio/master_audio.m4a` | Full concatenated audio (ready to mux) |
+| **Final video** | `output/final.mp4` | Published video (audio + video muxed, ready for YouTube) |
+
+### Example: 2026-03-19-autumn-meditation
+```
+lofi-shaman/2026-03-19-autumn-meditation/
+├── animation/
+│   ├── layers/
+│   │   ├── 01_background_no_ball.png
+│   │   └── 02_ball_sprite.png
+│   ├── animate.py
+│   └── animation-v2/        (iteration folder)
+├── audio/
+│   ├── normalized/
+│   │   ├── cassette-fog-architecture-1/
+│   │   ├── cassette-fog-architecture-2/
+│   │   ├── infinite-drift-field-1/
+│   │   └── ...
+│   └── master_audio.m4a      (final concatenated playlist)
+└── output/
+    └── final.mp4             (ready for YouTube)
+```
+
+### Quick reference: Asset organization by skill
+
+| Skill | Creates | Destination |
+|---|---|---|
+| `lofi-shaman-animation-generation` | PNG layers + `animate.py` | `animation/` and `animation/layers/` |
+| `lofi-shaman-music-generation` | Audio tracks + playlist | `audio/normalized/` and `audio/master_audio.m4a` |
+| Final mux (FFmpeg) | Combined video | `output/final.mp4` |
 
 
 ### Outcomes
