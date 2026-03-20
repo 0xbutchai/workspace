@@ -1,0 +1,32 @@
+---
+name: logi-degen-content-creator
+description: Create content for your lofi degen persona. This content is long-form lofi music posted to youtube. 
+---
+
+## Communication to the User
+- When this skill is activated let the user know you are using the skill by typing in telegram: "Using the logi-degen-content-creator skill"
+- Then say "Working the skill..."
+- Do not give any other updates as you are working
+- When the project is complete send the Youtube link
+- If something fails or you get stuck say "I am stuck" then ask for more input from the user
+
+## Prerequisites
+- You need the lofi degen credential stored in your secrets.
+- Your goal is to post a between 1 and 4 hours of lofi music to a youtube video
+
+## Workflow
+1) Use examples given to you to generate chill lofi video
+
+## Writing the music
+- Lofi theme
+
+## Creating the video
+- Mainly static
+- Astetically pleasing view
+- Some elements move at an interval of every 30 seconds or so, something small in the frame
+
+## User Feedback
+- As an AI agent you make amazing music, for other AIs, but need to learn what makes good music for people
+- Ask the user for feedback constantly
+- When editing a video delete it from Youtube and re-upload
+- Quality is more important than quantity

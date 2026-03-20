@@ -1,5 +1,9 @@
 # HEARTBEAT.md
 
-# Keep this file empty (or with only comments) to skip heartbeat API calls.
+## Active Watches
 
-# Add tasks below when you want the agent to check something periodically.
+### 🔍 Google Account Appeal
+- **Check:** Proton Mail inbox (0xbutchai@proton.me) for email from Google (noreply@google.com or accounts-noreply@google.com)
+- **Subject keywords:** "appeal", "account restored", "account disabled", "review complete"
+- **Action:** Notify Aidan immediately when it arrives, regardless of time
+- **Context:** Google disabled the account created today (2026-03-13) for bot detection. Appeal filed. If restored → sign in to YouTube and set channel name to "Lofi Guide"

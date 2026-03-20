@@ -16,9 +16,24 @@ grep -rn "cm_live_\|sk-\|ghp_\|api_key\s*=\|password\s*=\|BEGIN.*PRIVATE" . \
 If hits found: redact, then check git history (Step 5).
 
 ### 2. Verify .gitignore Covers
-`*.key`, `*.pem`, `*.env`, `secrets/`, `wallet.key`, `mnemonic`, `*secret*`, `*_token*`, `.openclaw/`
+`*.key`, `*.pem`, `*.env`, `.env.local`, `*.env.*`, `secrets/`, `wallet.key`, `mnemonic`, `*secret*`, `*_token*`, `.openclaw/`, `node_modules/`
 
-Test: `git check-ignore -v secrets/`
+**Create .gitignore before staging anything:**
+```bash
+cat >> .gitignore << 'EOF'
+.env
+.env.local
+.env.*
+*.key
+*.pem
+secrets/
+node_modules/
+EOF
+```
+
+Test: `git check-ignore -v .env.local`
+
+⚠️ **Never push .env or .env.local files** — these contain API keys, auth tokens, and passwords. Always add them to .gitignore BEFORE the first `git add`. If you already staged one, unstage it: `git rm --cached .env.local`
 
 ### 3. Create Repo via API (skip `gh auth login` — needs extra scopes)
 ```bash
@@ -48,3 +63,4 @@ Then rotate the exposed key immediately.
 - Use `curl` + token for repo creation — `gh auth login --with-token` requires `read:org` scope and will fail with a basic `repo`-scoped PAT
 - Token in remote URL works fine: `https://user:token@github.com/...`
 - `git check-ignore -v <path>` confirms what's actually excluded before pushing
+- **NEVER push .env / .env.local** — learned the hard way. Always gitignore env files before the first `git add`. Next.js projects always have `.env.local` with secrets baked in.
