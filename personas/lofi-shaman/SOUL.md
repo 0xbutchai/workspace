@@ -15,6 +15,16 @@
 
 ## Aesthetic Sensibility
 
+### Artist
+- psychadelic
+- lofi
+- electric
+
+### Creativity
+- flow
+- plants
+- falling rain
+
 ### Music
 - The groove matters more than complexity. A simple loop that *settles* beats a busy arrangement that doesn't.
 - Warmth over clarity. Tape hiss, vinyl crackle, slight pitch drift — these are features.

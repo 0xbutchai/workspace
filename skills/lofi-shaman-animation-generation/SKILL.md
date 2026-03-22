@@ -56,47 +56,17 @@ The loop duration must be chosen so that all animations return to their starting
 
 ---
 
-## Phase 2: Final Assembly — FFmpeg Mux Audio + Looped Video
+## Phase 2: Final Assembly (See lofi-shaman-final-product-creator Skill)
 
-This is the final step: loop the base video to match the audio length and merge them.
+After Aidan approves the animation preview, the final mux step (looping base video to audio length) is handled by the `lofi-shaman-final-product-creator` skill.
 
-### Prerequisites
-- Know the loop count: `floor(audio_duration / loop_duration)` = `floor(1040 / 20)` = 52 loops → `-stream_loop 51` (0-indexed)
+Your deliverable for this skill is **the rendered base loop uploaded to Vercel** for approval. Do not attempt the FFmpeg mux yourself.
 
-**Key flags explained:**
-- `-stream_loop 51` — loops the input video 52 times total (original + 51 repeats)
-- `-map 0:v -map 1:a` — video from input 0, audio from input 1
-- `-c:v libx264 -b:v 350k` — re-encode video at 350kbps (gives ~61MB for 17:20)
-- `-shortest` — stop when the shorter stream (audio) ends
-- `-movflags +faststart` — move moov atom to front for browser streaming
-- `> /tmp/ffmpeg_mux.log 2>&1 &` — **run in background** to avoid session timeout killing it
+## Deliverable ✅
 
-### Monitor progress
-```bash
-tail -f /tmp/ffmpeg_mux.log
-# Or just check periodically:
-tail -2 /tmp/ffmpeg_mux.log
-ls -lh lofi_shaman_final.mp4
-```
-
-### Verify completion
-```bash
-ffprobe lofi_shaman_final.mp4 2>&1 | grep Duration
-# Should show full audio duration (17:20)
-```
-
-### Deliverables
-1) The short,rendered video to repeat on loop
-  - Send to Aidan on Telegram for sign off
-2) Full video file - include file location in telegram chat
-  - Duration should matches the master audio time
-
-### Lessons learned — Phase 2
-- **Never use `-c:v copy`** for the final mux when combining with stream_loop — the output will be ~134MB (too large for Vercel). Always re-encode at a target bitrate.
-- **The moov atom issue:** with `-movflags +faststart`, ffmpeg does a two-pass write. The file will appear invalid (`moov atom not found`) until the process fully completes. Don't panic — just wait.
-- **Session timeout kills ffmpeg** — always run as a background process (`&`) with output redirected to a log file. This is the only reliable way to complete a 17-minute encode.
-- **`-shortest` is essential** — without it, the video will run past the audio end (silence for the remaining loops)
-- The audio `master_audio.m4a` is already pre-built from the Suno workflow — the video loop just needs to match its duration
+**A 5-30 second animation preview** uploaded to Vercel (e.g., `https://workspace-teal-theta.vercel.app/[path]`)
+- Ready for Aidan to review and approve/request changes
+- Do NOT render the full-length video — only the preview loop
 
 ---
 

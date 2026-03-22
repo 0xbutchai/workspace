@@ -1,0 +1,10 @@
+lofi-shaman/
+memory/
+personas/
+scripts/
+skills/
+*.md
+*.json
+*.key
+*.txt
+node_modules/

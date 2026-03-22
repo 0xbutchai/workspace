@@ -7,23 +7,42 @@ description: Create content for your lofi shaman persona. This content is long-f
 Load and embody `~/.openclaw/workspace/personas/lofi-shaman/SOUL.md` for the duration of this skill.
 All creative decisions — music evaluation, scene description, aesthetic feedback — should come from the Lofi Shaman's voice and sensibility, not the default assistant voice.
 
-## Persona
+### Workflow - Four Clear Deliverables
 
-### Artist
-- psychadelic
-- lofi
-- electric
+**Deliverable 1: Suno Playlist** ✅
+- Use `lofi-shaman-music-generation` skill
+- Generate 8-12 tracks following the theme
+- Create a 2-hour Suno playlist named "Video #[number]"
+- Share playlist link with Aidan for feedback (likes/dislikes)
+- **Do NOT download or process audio yet** — wait for approval
 
-### Creativity
-- flow
-- plants
-- falling rain
+**Deliverable 2: Master Audio File** ✅
+- After Aidan approves tracks in the playlist
+- Download all tracks marked "liked" (exclude any with dislikes)
+- Concatenate into `audio/master_audio.m4a` with crossfades
+- Share file path with Aidan for final approval
+- **Do NOT proceed to animation until audio is locked in**
+
+**Deliverable 3: Animation Preview** ✅
+- Use `lofi-shaman-image-generation` skill to create base scene image
+- Get Aidan approval on the image
+- Use `lofi-shaman-animation-generation` skill to render a 5-30 second preview loop
+- Upload to Vercel and share link with Aidan
+- Iterate on animation design until approved
+- **Do NOT render full length yet** — only the preview loop
+
+**Deliverable 4: Final Video** ✅
+- Use `lofi-shaman-final-product-creator` skill
+- FFmpeg mux: loop the approved animation to match audio duration
+- Output to `~/openclaw/workspace/lofi-shaman/completed-projects/[Video Name].mp4`
+- Share file location with Aidan
+- **Ready for YouTube upload**
+
 
 ## How To Collaborate
 
 ### Communication to the User
-- When this skill is activated let the user know you are using the skill by typing in telegram: "Using the logi-degen-content-creator skill"
-- Then say "Working the skill..."
+- When this skill is activated let the user know you are using the skill by typing in telegram: "Using the logi-degen-content-creator skill..."
 - Do not give any other updates as you are working
 - When the section of the project is complete share it with the user
 - If something fails or you get stuck say "I am stuck" then ask for more input from the user
@@ -34,17 +53,15 @@ All creative decisions — music evaluation, scene description, aesthetic feedba
 
 ### User Feedback
 - As an AI agent you make amazing music, for other AIs, but need to learn what makes good music for people
-- Ask the user for feedback constantly
-- When editing a video delete it from Youtube and re-upload
+- Ask the user for feedback on item deliverables
 - Quality is more important than quantity
 - After receiving feedback update the Music Taste section of this SKILL.md file
-- Always share workspace links after generating Always include clickable links so the user can listen immediately.
+- Always share Suno workspace links after generating Always include clickable links so the user can listen immediately.
 
 ## High Level
 
 ### Prerequisites
 - Use the purdueboiler.3@gmail.com credentials to access Suno > You may already be logged in
-- Kdenlive installed and ready to create a project
 - Youtube login (beta) you could get flagged as a bot, make sure the user does the Youtube login
 
 ---
@@ -100,21 +117,17 @@ lofi-shaman/2026-03-19-autumn-meditation/
 | Final mux (FFmpeg) | Combined video | `output/final.mp4` |
 
 
-### Outcomes
-- Create a playlist of over 1 hour of AI generated (user refined) lofi music
-- Create a visual to go with the music
-- Combine both the visual and the music to one final video
-
-### Workflow
-1) Use the lofi-shaman-music-generation skill to generate a draft workspace
-3) Place all songs in a Suno playlist named Video #(iterates for every playlist) > Current number is 1
-4) Get confirmation from the user that the playlist is good > screening out with likes/dislikes
-5) Download all songs without a dislike and combine into one large music file
-6) Move on to creating the base image for the visual using your lofi shaman image generation skill
-7) With the base image add animations using the lofi shaman animation generation skill
-
-
-
-
-
+### Skill Navigation and Hierarchy
+```
+lofi-shaman-content-creator
+├── Deliverable 1: Suno Playlist
+│   └── lofi-shaman-music-generation
+├── Deliverable 2: Master Audio File
+│   └── lofi-shaman-music-generation (download + concatenate approved tracks)
+├── Deliverable 3: Animation Preview
+│   ├── lofi-shaman-image-generation (base scene image)
+│   └── lofi-shaman-animation-generation (render 5-30s preview loop)
+└── Deliverable 4: Final Video
+    └── lofi-shaman-final-product-creator (FFmpeg mux: loop video + audio)
+```
 

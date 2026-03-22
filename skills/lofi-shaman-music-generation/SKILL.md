@@ -52,9 +52,36 @@ description: Create music for your lofi shaman persona. This skill optimizes pro
 - **Catchy melodies** — if it gets stuck in your head, it's wrong for this channel
 - **Pop song structure** — no hooks, no drops, no recognizable sections. Music should be structureless and ambient.
 
-###
-- A playlist of ~2 hours for Aidan to screen
-  > Liked songs make the final cut
-  > disliked songs do not get added
-- After approval string all songs together to one master file named video #
-  > (#) Number is the iteration
+## Workflow — Phase 1: Generate Songs in Workspace
+
+### Step 1: Create Workspace
+- Navigate to suno.com/create
+- Click "Workspaces" button (upper left)
+- Click "Create New Workspace"
+- Name it: `Video #[number] - [Scene]` (e.g., "Video 2 - Spring Farm Porch")
+- Confirm — all songs will auto-save here
+
+### Step 2: Generate Tracks
+- Use prompt-building best practices above
+- Aim for 8-12 tracks (4-6 Create clicks = 8-12 songs)
+- All songs auto-save to the workspace (no manual adds needed)
+- **Target: 2+ hours of total duration** (120+ minutes combined)
+
+### Step 3: Run Automation Script
+Once all songs are generated:
+```bash
+node ~/.openclaw/workspace/scripts/suno-workspace-playlist.js "Video 2 - Spring Farm Porch"
+```
+
+The script will:
+- Add all workspace songs to a playlist with the same name
+- Verify: playlist song count = workspace song count
+- Verify: playlist name = workspace name
+- Verify: total duration >= 2 hours (120 minutes)
+- Return shareable URL
+
+### Phase 1 Deliverable ✅
+A 2+ hour Suno playlist (same name as workspace) shared with Aidan for feedback.
+
+### What Happens Next
+Aidan likes/dislikes tracks. Once approved, download and concatenate into master audio (lofi-shaman-final-product-creator skill). Do NOT download yourself — wait for explicit approval.
