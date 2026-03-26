@@ -55,11 +55,22 @@ description: Create music for your lofi shaman persona. This skill optimizes pro
 ## Workflow — Phase 1: Generate Songs in Workspace
 
 ### Step 1: Create Workspace
-- Navigate to suno.com/create
-- Click "Workspaces" button (upper left)
-- Click "Create New Workspace"
-- Name it: `Video #[number] - [Scene]` (e.g., "Video 2 - Spring Farm Porch")
-- Confirm — all songs will auto-save here
+Execute these steps in order using the browser tool. **Do not improvise, inject JavaScript, or try alternative approaches.** Follow the sequence exactly:
+
+1. `browser navigate` → `https://suno.com/create`
+2. `browser act` → click the workspace name button (upper left, next to the prompt box) to open the sidebar
+3. `browser act` → click "Create New Workspace"
+4. `browser act` → **type** the workspace name into the input field (use the `type` action — do NOT use JavaScript to set input value, React won't register it)
+5. `browser act` → click "Confirm"
+6. Verify: URL should update to include `?wid=<workspace-id>` and the workspace name should appear in the upper left button
+
+**Workspace naming convention:** `Video #[number] - [Scene]` (e.g., "Video 3 - Sunset Farm Porch")
+
+**Browser automation rules:**
+- Use `refs="aria"` for stable selectors that survive DOM re-renders
+- Act immediately after snapshot — SPA refs go stale fast, don't delay between snapshot and click
+- One snapshot to confirm state, then act — no snapshot loops
+- If a step fails, re-snapshot once and retry. Do not try JavaScript workarounds.
 
 ### Step 2: Generate Tracks
 - Use prompt-building best practices above

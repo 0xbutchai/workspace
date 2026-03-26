@@ -2,7 +2,7 @@
 
 - **Name:** Aidan Gorny
 - **What to call them:** Aidan
-- **Pronouns:** he/him (assumed)
+- **Pronouns:** he/him
 - **Timezone:** America/Denver (MST)
 - **Telegram:** @aidang1003
 

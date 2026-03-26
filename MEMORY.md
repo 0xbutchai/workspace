@@ -99,39 +99,6 @@ The page will be enhanced with:
 - **Purpose:** DaVinci Resolve video editing for Lofi Shaman YouTube channel
 - **Credentials:** also appended to `~/.openclaw/secrets/proton.txt`
 
-## Lofi Shaman Video — COMPLETE (2026-03-18 23:31 MDT)
-
-**Final Video File:**
-- Location: `/home/butch/.openclaw/workspace/lofi-shaman/animation/lofi_shaman_final.mp4`
-- Duration: 17m 20s (1040 seconds)
-- Resolution: 1920×1080 (HD)
-- Codecs: H.264 video + AAC audio
-- File size: 63 MB
-- Format: MP4 (YouTube-ready)
-
-**What's In It:**
-- **Animation**: Seamless 60-second looping scene with basketball arc animation once per loop (~2 seconds)
-- **Layers**: Lofi anime illustration (background sky, midground clearing, hoop, character, ball, foreground grass)
-- **Audio**: 6 best lofi ambient tracks (17m 20s total):
-  1. Orbital Coffee Break (4 tracks) — gold standard reference
-  2. Cassette Fog Architecture (2 tracks) — ambient downtempo
-- **Style**: Mostly static with subtle parallax drift
-
-**Build Process (Fast Path):**
-1. Generated 6 image layers at 1920×1080 using Gemini 3 Pro Image
-2. Removed white backgrounds from isolated elements (ball, hoop, character, foreground)
-3. Rendered 1 static frame + 48 frames of ball animation (2s) using NumPy compositing
-4. Stitched 3 parts with FFmpeg: static (28s) → animation (2s) → static (30s) = 60s loop
-5. Encoded audio: transcoded 6 Opus tracks to AAC, concatenated to 17m 20s master
-6. Looped video 18x to match audio duration using FFmpeg concat demuxer
-7. Final mux: video + audio with H.264/AAC codecs
-
-**Upload Ready:**
-- Direct to YouTube
-- No additional encoding needed
-- 1080p HD suitable for all viewing
-- Audio + video synced and verified
-
 ## Google Account Created (2026-03-13)
 
 - **Login email:** 0xbutchai@proton.me (not a Gmail — linked existing Proton address)

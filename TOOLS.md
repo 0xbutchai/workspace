@@ -2,16 +2,12 @@
 
 Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
 
-## What Goes Here
-
-Things like:
-
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
+## Suno - Song Generation
+- Front end site made for people
+- Use the website like a person
+- When you see an option that needs to get selected click it
+- Do not write complex scripts to progress through the page
+- Wait a few seconds in between actions to emulate a user
 
 ## Examples
 
@@ -27,7 +23,7 @@ Things like:
 
 ### TTS
 
-- Preferred voice: "Nova" (warm, slightly British)
+- Preferred voice: "Nova" (warm, slightly Australian)
 - Default speaker: Kitchen HomePod
 ```
 
